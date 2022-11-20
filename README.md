@@ -4,7 +4,7 @@
 
 ## 安装
 ~~~
-composer require fudaoji/php-uplaod
+composer require fudaoji/php-upload
 ~~~
 
 ## 用法：
