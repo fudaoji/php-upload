@@ -1,0 +1,21 @@
+{
+    "name": "fudaoji/php-upload",
+    "description": "Upload Manager",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Rocky",
+            "email": "461960962@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "qiniu/php-sdk": "^7.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dao\\": "src"
+        },
+        "files": []
+    }
+}
