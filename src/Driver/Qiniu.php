@@ -15,6 +15,7 @@ use Qiniu\Storage\UploadManager;
 use Qiniu\Cdn\CdnManager;
 use Qiniu\Config;
 use Qiniu\Processing\PersistentFop;
+use Qiniu\Zone;
 
 class Qiniu
 {
@@ -315,5 +316,48 @@ class Qiniu
         } else {
             return $this->downLink($key);
         }
+    }
+
+    /**
+     * 上传base64格式的图片
+     * @param $key
+     * @param $string
+     * @return mixed
+     * @author: Doogie<461960962@qq.com>
+     */
+    function uploadBase64($key = '', $string = ''){
+        $zone = $this->getZone();
+        $remote_server = 'http://'.$zone->srcUpHosts[0].'/putb64/-1' . ($key ? '/key/'.base64_encode($key) : '');
+        $headers = array();
+        $headers[] = 'Content-Type:image/png';
+        $headers[] = 'Authorization:UpToken '.$this->upToken();
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,$remote_server);
+        //curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_HTTPHEADER ,$headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        //curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $string);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        $data = curl_exec($ch);
+        curl_close($ch);
+
+        $data = json_decode($data, true);
+        if(!empty($data['error'])){
+            $this->error = '错误信息: ' . $data['error'];
+            return false;
+        }else{
+            return $this->downLink($data['key']);
+        }
+    }
+
+    /**
+     * 获取空间信息
+     * @return mixed
+     * @author: fudaoji<fdj@kuryun.cn>
+     */
+    function getZone(){
+        return Zone::queryZone($this->config['accessKey'], $this->config['bucket']);
     }
 }
