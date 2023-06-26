@@ -10,6 +10,11 @@ namespace Dao\Upload;
 
 class Upload
 {
+    const LOCAL = 'local';
+    const QINIU = 'qiniu';
+    const ALIYUN = 'aliyun';
+    const QCLOUD = 'qcloud';
+
     /**
      * 默认上传配置
      * @var array
