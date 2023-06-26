@@ -1,6 +1,6 @@
 # dao-upload
 
-用于PHP文件上传（PHP 7.1+），支持本地、七牛等上传方式。
+用于PHP文件上传（PHP 7.1+），支持本地、七牛、阿里云(oss)、腾讯云(cos)等上传方式。
 
 ## 安装
 ~~~
@@ -48,5 +48,26 @@ $driver_config = [
     'domain' => '',
 ];
 $Upload = new Uploader($config, 'qiniu', $driver_config);
+$info   = $Upload->upload($files, '文件名前缀，选填');  //false || [{}]
+
+//阿里云的配置
+$driver_config = [
+    'accessKey' => '', //对应oss的AccessKeyId
+    'secrectKey' => '', //对应oss的AccessKeySecret
+    'bucket' => '',
+    'domain' => '',
+];
+$Upload = new Uploader($config, 'aliyun', $driver_config);
+$info   = $Upload->upload($files, '文件名前缀，选填');  //false || [{}]
+
+//腾讯云的配置
+$driver_config = [
+    'accessKey' => '', //对应cos的secretId 
+    'secrectKey' => '', //对应cos的secretKey
+    'region' => '', //区域
+    'bucket' => '',
+    'domain' => '',
+];
+$Upload = new Uploader($config, 'qcloud', $driver_config);
 $info   = $Upload->upload($files, '文件名前缀，选填');  //false || [{}]
 ~~~
