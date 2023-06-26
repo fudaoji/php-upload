@@ -117,8 +117,9 @@ class Aliyun
      * @Author: Doogie <461960962@qq.com>
      */
     public function downLink($key){
-        $key = urlencode($key);
+        //$key = urlencode($key);
         $key = self::_escapeQuotes($key);
+        //return $this->ossClient->signUrl($this->config['bucket'], $key, 3600); 临时权限
         return "{$this->config['domain']}/{$key}";
     }
 

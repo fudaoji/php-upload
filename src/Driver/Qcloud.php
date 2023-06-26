@@ -121,10 +121,9 @@ class Qcloud
      * @Author: Doogie <461960962@qq.com>
      */
     public function downLink($key){
-        $key = urlencode($key);
+        //$key = urlencode($key);
         $key = self::_escapeQuotes($key);
-        return $this->cosClient->getObjectUrl($this->config['bucket'], $key);
-        return "{$this->config['domain']}/{$key}";
+        return $this->cosClient->getObjectUrlWithoutSign($this->config['bucket'], $key);
     }
 
     /**
