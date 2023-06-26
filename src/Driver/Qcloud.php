@@ -3,21 +3,11 @@
  * Created by PhpStorm.
  * Script Name: Qcloud.php
  * Create: 2023/6/26 11:41
-<<<<<<< HEAD
- * Description: https://cloud.tencent.com/document/product/436/12266
+ * Description: 腾讯云cos https://cloud.tencent.com/document/product/436/12266
  * Author: fudaoji<fdj@kuryun.cn>
  */
 namespace Dao\Upload\Driver;
 
-=======
- * Description:
- * Author: fudaoji<fdj@kuryun.cn>
- */
-
-namespace Dao\Upload\Driver;
-
-
->>>>>>> 21568289f64effb67fd8caf73a6cab07da389630
 class Qcloud
 {
 
@@ -40,11 +30,7 @@ class Qcloud
         'bucket'         => '', //bucket
         'timeout'        => 1500, //超时时间
     );
-<<<<<<< HEAD
     private $cosClient;
-=======
-    private $ossClient;
->>>>>>> 21568289f64effb67fd8caf73a6cab07da389630
 
     /**
      * 构造函数，用于设置上传根路径
@@ -52,7 +38,6 @@ class Qcloud
      */
     public function __construct($config){
         $this->config = array_merge($this->config, $config);
-<<<<<<< HEAD
         $region = $this->config['region'];
         $this->cosClient = new \Qcloud\Cos\Client([
             'region' => $region,
@@ -62,14 +47,6 @@ class Qcloud
                 'secretKey' => $this->config['secrectKey']
             ]
         ]);
-=======
-        try {
-            $endpoint = str_replace('https://' . $this->config['bucket'] . '.', '', $this->config['domain']);
-            $this->ossClient = new OssClient($this->config['accessKey'], $this->config['secrectKey'], $endpoint);
-        }catch (OssException $e){
-            die($e->getMessage());
-        }
->>>>>>> 21568289f64effb67fd8caf73a6cab07da389630
     }
 
     /**
@@ -114,7 +91,6 @@ class Qcloud
         // 上传到七牛后保存的文件名
         $key = $this->savePath . $file['savename'];
 
-<<<<<<< HEAD
         $content = fopen($file['tmp_name'], "rb");
         try {
             $this->cosClient->putObject([
@@ -125,14 +101,6 @@ class Qcloud
             $file['url'] = $this->downLink($key);
             return true;
         } catch (\Exception $e) {
-=======
-        $content = $file['tmp_name'];
-        try {
-            $this->ossClient->putObject($bucket, $key, $content);
-            $file['url'] = $this->downLink($key);
-            return  true;
-        } catch (OssException $e) {
->>>>>>> 21568289f64effb67fd8caf73a6cab07da389630
             $this->error = '上传出错: ' . $e->getMessage();
             return false;
         }
@@ -155,10 +123,7 @@ class Qcloud
     public function downLink($key){
         $key = urlencode($key);
         $key = self::_escapeQuotes($key);
-<<<<<<< HEAD
         return $this->cosClient->getObjectUrl($this->config['bucket'], $key);
-=======
->>>>>>> 21568289f64effb67fd8caf73a6cab07da389630
         return "{$this->config['domain']}/{$key}";
     }
 
@@ -186,7 +151,6 @@ class Qcloud
         $bucket = $this->config['bucket'];
 
         try {
-<<<<<<< HEAD
             $this->cosClient->putObject([
                 'Bucket' => $bucket,
                 'Key' => $key,
@@ -194,16 +158,10 @@ class Qcloud
             ]);
             return $this->downLink($key);
         } catch (\Exception $e) {
-=======
-            $this->ossClient->putObject($bucket, $key, $string);
-            return $this->downLink($key);
-        } catch (OssException $e) {
->>>>>>> 21568289f64effb67fd8caf73a6cab07da389630
             $this->error = '上传出错: ' . $e->getMessage();
             return false;
         }
     }
-<<<<<<< HEAD
 
     /**
      * 删除对象
@@ -251,6 +209,4 @@ class Qcloud
             return false;
         }
     }
-=======
->>>>>>> 21568289f64effb67fd8caf73a6cab07da389630
 }

@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * Script Name: Aliyun.php
  * Create: 2023/6/26 9:49
- * Description: https://github.com/aliyun/aliyun-oss-php-sdk?spm=a2c4g.14484438.10004.1
+ * Description: 阿里云 oss https://github.com/aliyun/aliyun-oss-php-sdk?spm=a2c4g.14484438.10004.1
  * Author: fudaoji<fdj@kuryun.cn>
  */
 
@@ -93,11 +93,7 @@ class Aliyun
 
         $content = $file['tmp_name'];
         try {
-<<<<<<< HEAD
             $this->ossClient->uploadFile($bucket, $key, $content);
-=======
-            $this->ossClient->putObject($bucket, $key, $content);
->>>>>>> 21568289f64effb67fd8caf73a6cab07da389630
             $file['url'] = $this->downLink($key);
             return  true;
         } catch (OssException $e) {
@@ -157,7 +153,6 @@ class Aliyun
             return false;
         }
     }
-<<<<<<< HEAD
 
     /**
      * 删除对象
@@ -203,6 +198,4 @@ class Aliyun
             return false;
         }
     }
-=======
->>>>>>> 21568289f64effb67fd8caf73a6cab07da389630
 }
